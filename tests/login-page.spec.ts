@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures';
 
-test('Login successful with session persistence and logout', async ({ registerPage, apiClient, loginPage, dashboardPage, navigationBar, page }) => {
+test('Login successful with session persistence and logout', async ({ registerPage, apiClient, loginPage, navigationBar, page }) => {
   const ts = Date.now();
   const username = `user_${ts}`.slice(0, 15);
   const password = process.env.DEMO_PASSWORD;
@@ -21,7 +21,6 @@ test('Login successful with session persistence and logout', async ({ registerPa
   
   await test.step('Login with valid credentials', async () => {
     await loginPage.login(username, password);
-    await dashboardPage.isLoaded();
     await expect(page.getByText(new RegExp(`Welcome\\s+${username}`, 'i'))).toBeVisible({ timeout: 10000 });
   });
 

@@ -1,6 +1,6 @@
  import { test, expect } from './fixtures';
 
-test('Registration and login successful', async ({ registerPage, loginPage, dashboardPage, page }) => {
+test('Registration successful', async ({ registerPage, page }) => {
 
   const ts = Date.now();
   const username = `user_${ts}`.slice(0, 15);
