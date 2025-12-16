@@ -1,0 +1,38 @@
+name: Playwright Tests (push)
+on:
+  push:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Validate DEMO_PASSWORD secret
+      run: |
+        if [ -z "${DEMO_PASSWORD}" ]; then
+          echo "ERROR: DEMO_PASSWORD secret is not set. Add it in repo Settings → Secrets → Actions." >&2
+          exit 1
+        fi
+      env:
+        DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
+    - name: Run Playwright tests
+      env:
+        DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
+      run: npx playwright test
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        # Upload both the generated HTML report and raw test-results so traces/videos/screenshots are available
+        path: |
+          playwright-report/
+          test-results/
+        retention-days: 30
