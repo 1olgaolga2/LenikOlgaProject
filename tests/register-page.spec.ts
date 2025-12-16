@@ -11,9 +11,9 @@ test('Registration successful', async ({ registerPage, page }) => {
 
   await registerPage.goto();
   const signupMessage = await registerPage.register(username, password);
-  await expect(signupMessage?.toLowerCase()).toContain('successful');
-  await expect(registerPage.modal).toBeHidden();
-  await expect(page).toHaveURL(/.*demoblaze.com*\//);
+  await expect.soft(signupMessage?.toLowerCase()).toContain('successful');
+  await expect.soft(registerPage.modal).toBeHidden();
+  await expect.soft(page).toHaveURL(/.*demoblaze.com*\//);
 });
 
 test('Registration with empty password', async ({ registerPage }) => {
@@ -23,7 +23,7 @@ test('Registration with empty password', async ({ registerPage }) => {
   await registerPage.goto();
   const errorMessage = await registerPage.register(username, '');
   
-  expect(errorMessage).toBeTruthy();
-  expect(errorMessage?.toLowerCase()).toContain('please fill out username and password.');
-  await expect(registerPage.modal).toBeVisible();
+  await expect.soft(errorMessage).toBeTruthy();
+  await expect.soft(errorMessage?.toLowerCase()).toContain('please fill out username and password.');
+  await expect.soft(registerPage.modal).toBeVisible();
 });

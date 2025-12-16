@@ -9,14 +9,14 @@ test('Login successful with session persistence and logout', async ({ registerPa
     throw new Error('DEMO_PASSWORD environment variable is not set.');
   }
 
-  /*NOTE: user registration in this test should be done by API request, I've created API methods to create a user, it returns 200OK status, but it's not possible to log in via UI with this credentials. That's why here I'm presenting an example how it should be implemented with API request, but below to make test pass I'm registering user with UI.
+  /*NOTE: user registration in this test should be done by API request, I've created API methods to create a user, it returns 200OK status, but it's not possible to log in via UI with this credentials. maybe some additional authorization is neccessery. That's why here I'm presenting an example how it should be implemented with API request, but below to make test pass I'm registering user with UI.
   await apiClient.registerUser(username, password);*/
 
   await test.step('Register user via UI', async () => {
     await registerPage.goto();
     const signupMessage = await registerPage.register(username, password);
-    await expect(signupMessage?.toLowerCase()).toContain('successful');
-    await expect(registerPage.modal).toBeHidden();
+    await expect.soft(signupMessage?.toLowerCase()).toContain('successful');
+    await expect.soft(registerPage.modal).toBeHidden();
   });
   
   await test.step('Login with valid credentials', async () => {
