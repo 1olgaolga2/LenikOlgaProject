@@ -14,7 +14,7 @@ export class RegisterPage {
     this.usernameInput = page.locator('#sign-username');
     this.passwordInput = page.locator('#sign-password');
     this.modal = page.locator('#signInModal');
-    this.submitButton = this.modal.getByRole('button', { name: /sign up/i });
+    this.submitButton = this.modal.getByRole('button', { name: 'sign up' });
   }
 
   async goto() {
@@ -23,7 +23,6 @@ export class RegisterPage {
 
   async register(username: string, password: string): Promise<string | null> {
     await this.openBtn.click();
-    await this.modal.waitFor({ state: 'visible', timeout: 5000 });
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
   

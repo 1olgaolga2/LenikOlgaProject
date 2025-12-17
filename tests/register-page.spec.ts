@@ -13,7 +13,7 @@ test('Registration successful', async ({ registerPage, page }) => {
   const signupMessage = await registerPage.register(username, password);
   await expect.soft(signupMessage?.toLowerCase()).toContain('successful');
   await expect.soft(registerPage.modal).toBeHidden();
-  await expect.soft(page).toHaveURL(/.*demoblaze.com*\//);
+  await expect.soft(page).toHaveURL('demoblaze.com');
 });
 
 test('Registration with empty password', async ({ registerPage }) => {
