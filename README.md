@@ -24,6 +24,9 @@ Project contains:
 - **playwright.config.ts** - Playwright configuration
 - **tests/** - Directory with tests
 
+### Copilot:
+The repository includes Copilot usage guidelines that define coding standards and best practices, helping ensure that AI-generated suggestions follow the same quality, security, and Playwright conventions as manually written code.
+
 ## 📝 Useful Commands
 
 ```bash
