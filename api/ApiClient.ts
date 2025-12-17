@@ -8,18 +8,20 @@ export class ApiClient {
     this.request = request;
   }
 
-  async registerUser(username: string, password: string): Promise<{ Auth: boolean; message?: string }> {
-   
-    const response = await this.request.post(`https://api.demoblaze.com/signup`, {
-    headers: {
+  async registerUser(
+    username: string,
+    password: string
+  ): Promise<{ Auth: boolean; message?: string }> {
+    const response = await this.request.post('https://api.demoblaze.com/signup', {
+      headers: {
         'Content-Type': 'application/json',
       },
-    data: {
+      data: {
         username: username,
         password: password,
       },
     });
-    
+
     if (!response.ok()) {
       throw new Error(`Failed to register user: ${response.status()} ${response.statusText()}`);
     }
