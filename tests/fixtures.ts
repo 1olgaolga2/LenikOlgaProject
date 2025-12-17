@@ -33,11 +33,12 @@ export const test = base.extend<TestFixtures>({
 
 test.beforeEach(async ({ loginPage }) => {
   await loginPage.goto();
-  // additionally here should be implemented steps like user registration via API, login via cookies etc. Now it's inside my tests. 
+  /*  here should be implemented steps like user registration via API, login via cookies etc.
+      Now it's inside my tests. */
 });
 
 test.afterEach(async () => {
-  // here should be implemented cleanup steps - e.g. deleting users which has been created during tests
+  // here should be implemented cleanup steps - e.g. deleting users who have been created during tests
 });
 
 export { expect } from '@playwright/test';
