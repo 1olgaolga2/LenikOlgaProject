@@ -2,45 +2,45 @@
 
 Tests of e-commerce page using Playwright with TypeScript
 
-## 📋 Instalacja
+## 📋 Installation
 
-### Zainstalowane pakiety:
+### Installed packages:
 
-- **@playwright/test** - Framework testowy do automatyzacji przeglądarek
-- **typescript** - Obsługa TypeScript dla projektów Node.js
-- **@types/node** - Typy TypeScript dla Node.js
-- **ts-node** - Bezpośrednie uruchamianie plików TypeScript
+- **@playwright/test** - Testing framework for browser automation
+- **typescript** - TypeScript support for Node.js projects
+- **@types/node** - TypeScript types for Node.js
+- **ts-node** - Direct execution of TypeScript files
 
-### Przeglądarki:
+### Browsers:
 
 - Chromium 143.0.7499.4
 - Firefox 144.0.2
 - Webkit 26.0
 
-## 🚀 Konfiguracja projektu
+## 🚀 Project Configuration
 
-Projekt zawiera:
-- **tsconfig.json** - Konfiguracja TypeScript
-- **playwright.config.ts** - Konfiguracja Playwrighta
-- **tests/** - Katalog z testami
+Project contains:
+- **tsconfig.json** - TypeScript configuration
+- **playwright.config.ts** - Playwright configuration
+- **tests/** - Directory with tests
 
-## 📝 Użyteczne komendy
+## 📝 Useful Commands
 
 ```bash
-# Uruchomienie testów
+# Run tests
 npm test
 
-# Uruchomienie testów w trybie watch
+# Run tests in watch mode
 npm run test:watch
 
-# Otwarcie HTML raportu
+# Open HTML report
 npm run test:report
 
-# Uruchomienie w debuggerze
+# Run in debugger
 npm run test:debug
 ```
 
-## 📚 Linki
+## 📚 Links
 
-- [Dokumentacja Playwright](https://playwright.dev)
+- [Playwright Documentation](https://playwright.dev)
 - [TypeScript](https://www.typescriptlang.org)
