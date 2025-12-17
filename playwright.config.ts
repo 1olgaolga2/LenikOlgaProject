@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
-import os from 'os';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 /**
  * Read environment variables from file.
@@ -7,6 +8,10 @@ import os from 'os';
  */
 import dotenv from 'dotenv';
 import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 // Load environment variables from repository root .env (ignored)
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
@@ -36,7 +41,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://www.demoblaze.com/',
-    
+
     /* Run headless on CI (no X server); keep headed locally for debugging */
     headless: !!process.env.CI,
 
