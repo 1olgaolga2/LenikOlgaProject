@@ -1,35 +1,44 @@
 name: Playwright Tests (push)
 
+
 on:
   push:
     branches: [ main, feature/playwright-tests ]
+
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+
 concurrency:
   group: "pages"
   cancel-in-progress: true
+
 
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
+
     steps:
       - uses: actions/checkout@v4
+
 
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
+
       - name: Install dependencies
         run: npm ci
 
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
 
       - name: Validate DEMO_PASSWORD secret
         run: |
@@ -40,10 +49,12 @@ jobs:
         env:
           DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
 
+
       - name: Run Playwright tests
         env:
           DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
         run: npx playwright test
+
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -54,47 +65,13 @@ jobs:
             test-results/
           retention-days: 30
 
-      - name: Prepare Pages artifact (report + traces)
+      - name: Prepare Pages artifact
         if: ${{ !cancelled() }}
-        shell: bash
         run: |
           rm -rf _site
           mkdir -p _site
           cp -r playwright-report/* _site/
 
-          # Collect all trace.zip into a single folder on Pages
-          mkdir -p _site/traces
-          if [ -d "test-results" ]; then
-            find test-results -type f -name "trace.zip" -print0 | while IFS= read -r -d '' f; do
-              safe=$(echo "$f" | sed 's#[/ ]#_#g')
-              cp "$f" "_site/traces/${safe}"
-            done
-          fi
-
-          # Create a simple index page with links to trace.playwright.dev
-          cat > _site/traces/index.html << 'EOF'
-          <!doctype html>
-          <html>
-            <head>
-              <meta charset="utf-8" />
-              <title>Playwright Traces</title>
-            </head>
-            <body>
-              <h1>Playwright Traces</h1>
-              <p>Click a trace to open it in the online Trace Viewer.</p>
-              <ul>
-          EOF
-
-          PAGES_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
-          shopt -s nullglob
-          for z in _site/traces/*; do
-            [ -f "$z" ] || continue
-            file=$(basename "$z")
-            traceUrl="${PAGES_URL}/traces/${file}"
-            echo "<li><a href=\"https://trace.playwright.dev/?trace=${traceUrl}\">${file}</a></li>" >> _site/traces/index.html
-          done
-
-          echo "</ul></body></html>" >> _site/traces/index.html
 
       - name: Upload Pages artifact
         if: ${{ !cancelled() }}
@@ -102,12 +79,14 @@ jobs:
         with:
           path: _site
 
+
   deploy:
     needs: test
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
 
     steps:
       - name: Deploy to GitHub Pages
